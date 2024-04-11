@@ -23,11 +23,14 @@ public class ConcurrentBank {
     }
 
     public synchronized String transfer (BankAccount accountDeposit, BankAccount accountWithdraw, BigDecimal sum) {
-        accountDeposit.deposit(sum);
-        accountWithdraw.withdraw(sum);
-        return "deposite to account id = " + accountDeposit.getId()
-                + "withdraw to account id = " + accountWithdraw.getId()
-                + "sum = " + sum;
+        if(accountWithdraw.withdraw(sum)) {
+            accountDeposit.deposit(sum);
+            return "deposite to account id = " + accountDeposit.getId()
+                    + "withdraw from account id = " + accountWithdraw.getId()
+                    + "sum = " + sum;
+        }
+        else
+            return "balance account id = " + accountWithdraw.getId() + "< sum";
     }
 
     public BigDecimal getTotalBalance() {

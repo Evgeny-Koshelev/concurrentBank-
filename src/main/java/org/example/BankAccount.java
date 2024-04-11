@@ -29,15 +29,15 @@ public class BankAccount {
         return "deposit = " + sum;
     }
 
-    public synchronized String withdraw (BigDecimal sum) {
+    public synchronized Boolean withdraw (BigDecimal sum) {
 
         if(balance.compareTo(sum) < 0) {
-            return "withdraw sum > balance";
+            return false;
         }
         else {
             BigDecimal temp = balance.subtract(sum);
             balance = temp;
-            return "withdraw = " + sum;
+            return true;
         }
     }
 
